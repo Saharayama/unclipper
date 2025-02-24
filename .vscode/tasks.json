@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "go",
+            "label": "Dafault build",
+            "command": "build",
+            "args": [
+                "-o",
+                "unclipper.exe",
+                "-ldflags",
+                "-H windowsgui"
+            ],
+            "problemMatcher": [
+                "$go"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Release",
+            "command": "C:\\Program Files\\Git\\bin\\bash.exe",
+            "args": [
+                "./scripts/release.sh"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "none"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            }
+        }
+    ]
+}
