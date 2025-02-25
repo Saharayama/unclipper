@@ -53,26 +53,27 @@ func openPath(pathFormatted string) {
 		return
 	}
 
-	if _, err := os.Stat(pathFormatted); err != nil {
-		return
-	}
-
 	pathSuffix := filepath.Ext(pathFormatted)
 	var cmd *exec.Cmd
 
-	if strings.HasPrefix(pathSuffix, ".xl") {
-		if _, err := os.Stat(excelPath); err == nil {
-			cmd = exec.Command(excelPath, "/x", pathFormatted)
-		}
-	} else if strings.HasPrefix(pathSuffix, ".do") {
-		if _, err := os.Stat(wordPath); err == nil {
-			cmd = exec.Command(wordPath, "/w", pathFormatted)
+	if !strings.HasPrefix(pathFormatted, "http") {
+		if strings.HasPrefix(pathSuffix, ".xl") {
+			if _, err := os.Stat(excelPath); err == nil {
+				cmd = exec.Command(excelPath, "/x", pathFormatted)
+			}
+		} else if strings.HasPrefix(pathSuffix, ".do") {
+			if _, err := os.Stat(wordPath); err == nil {
+				cmd = exec.Command(wordPath, "/w", pathFormatted)
+			}
 		}
 	}
 
 	if cmd == nil {
 		exec.Command("rundll32", "url.dll,FileProtocolHandler", pathFormatted).Start()
 	} else {
+		if _, err := os.Stat(pathFormatted); err != nil {
+			return
+		}
 		cmd.Start()
 	}
 }
