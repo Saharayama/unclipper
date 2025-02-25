@@ -12,8 +12,9 @@
 - ファイルは基本的に既定のアプリで開かれます。フォルダーはエクスプローラーで開きます。
     - `C:\Users\sample\Downloads\sample.txt`
     - `C:\Users\sample\Desktop\sample\`
-- `"`の有無に関係なく開きます。
+- `""`や`<>`で囲んでいても開きます。
     - `"C:\Users\sample\Desktop\sample.jpg"`
+    - `<C:\Users\sample\Desktop\sample.pdf>`
 - WordファイルとExcelファイルは新しいインスタンスで開きます。Microsoft WordやMicrosoft Excelがインストールされている必要があります。
     - `D:\Documents\sample.docx`
     - `D:\Documents\sample.xlsx`
