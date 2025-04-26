@@ -57,6 +57,9 @@ func openPath(pathFormatted string) {
 	var cmd *exec.Cmd
 
 	if !strings.HasPrefix(pathFormatted, "http") {
+		if _, err := os.Stat(pathFormatted); err != nil {
+			return
+		}
 		if strings.HasPrefix(pathSuffix, ".xl") {
 			if _, err := os.Stat(excelPath); err == nil {
 				cmd = exec.Command(excelPath, "/x", pathFormatted)
@@ -71,9 +74,6 @@ func openPath(pathFormatted string) {
 	if cmd == nil {
 		exec.Command("rundll32", "url.dll,FileProtocolHandler", pathFormatted).Start()
 	} else {
-		if _, err := os.Stat(pathFormatted); err != nil {
-			return
-		}
 		cmd.Start()
 	}
 }
