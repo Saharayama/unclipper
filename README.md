@@ -34,7 +34,7 @@
     - `192.168.1.100/share/01%20sample/%7b%5bsample%5d%7d.txt`
 
 ## ビルド方法
-`go build -ldflags "-H windowsgui" -o unclipper.exe`
+`go build -ldflags "-s -w -H windowsgui" -trimpath -o unclipper.exe`
 
 ## ライセンス
 このプログラムはMITライセンスの下で公開されています。

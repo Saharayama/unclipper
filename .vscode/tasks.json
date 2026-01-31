@@ -9,7 +9,8 @@
                 "-o",
                 "unclipper.exe",
                 "-ldflags",
-                "-H windowsgui"
+                "-s -w -H windowsgui",
+                "-trimpath"
             ],
             "problemMatcher": [
                 "$go"
