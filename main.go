@@ -18,6 +18,7 @@ const (
 var (
 	invalidPathChars = regexp.MustCompile(`"|^ *-|^\t*-|<|>`)
 	networkPathRegex = regexp.MustCompile(`^\\+`)
+	msys2PathRegex   = regexp.MustCompile(`^/([a-zA-Z])(/|$)`)
 )
 
 func formatPath(p string) string {
@@ -27,6 +28,9 @@ func formatPath(p string) string {
 	var path string
 	if strings.Contains(p, ":") && strings.Contains(p, "/") {
 		path = strings.ReplaceAll(p, "/", "\\")
+	} else if strings.HasPrefix(p, "/") {
+		drivePath := msys2PathRegex.ReplaceAllString(p, "$1:/")
+		path = filepath.FromSlash(drivePath)
 	} else if strings.HasPrefix(p, "\\") {
 		p = networkPathRegex.ReplaceAllString(p, "")
 		path = "\\\\" + p
