@@ -27,18 +27,7 @@ func formatPath(p string) string {
 	var path string
 	if strings.Contains(p, ":") && strings.Contains(p, "/") {
 		path = strings.ReplaceAll(p, "/", "\\")
-	} else if strings.Contains(p, "/") {
-		p = strings.ReplaceAll(p, "%20", " ")
-		p = strings.ReplaceAll(p, "%23", "#")
-		p = strings.ReplaceAll(p, "%5b", "[")
-		p = strings.ReplaceAll(p, "%5d", "]")
-		p = strings.ReplaceAll(p, "%5e", "^")
-		p = strings.ReplaceAll(p, "%60", "`")
-		p = strings.ReplaceAll(p, "%7b", "{")
-		p = strings.ReplaceAll(p, "%7d", "}")
-		p = strings.ReplaceAll(p, "%25", "%")
-		path = "\\\\" + strings.ReplaceAll(p, "/", "\\")
-	} else if strings.HasPrefix(p, "\\\\") {
+	} else if strings.HasPrefix(p, "\\") {
 		p = networkPathRegex.ReplaceAllString(p, "")
 		path = "\\\\" + p
 	} else {
