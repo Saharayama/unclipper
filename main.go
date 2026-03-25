@@ -21,12 +21,18 @@ var (
 	msys2PathRegex   = regexp.MustCompile(`^/([a-zA-Z])(/|$)`)
 )
 
+func isURL(s string) bool {
+	return strings.HasPrefix(s, "http://") || strings.HasPrefix(s, "https://") || strings.HasPrefix(s, "file://")
+}
+
 func formatPath(p string) string {
 	p = invalidPathChars.ReplaceAllString(p, "")
 	p = strings.TrimSpace(p)
 
 	var path string
-	if strings.Contains(p, ":") && strings.Contains(p, "/") {
+	if isURL(p) {
+		path = p
+	} else if strings.Contains(p, ":") && strings.Contains(p, "/") {
 		path = strings.ReplaceAll(p, "/", "\\")
 	} else if strings.HasPrefix(p, "/") {
 		drivePath := msys2PathRegex.ReplaceAllString(p, "$1:/")
@@ -49,7 +55,7 @@ func openPath(pathFormatted string) {
 	pathSuffix := filepath.Ext(pathFormatted)
 	var cmd *exec.Cmd
 
-	if !strings.HasPrefix(pathFormatted, "http") {
+	if !isURL(pathFormatted) {
 		if _, err := os.Stat(pathFormatted); err != nil {
 			return
 		}
